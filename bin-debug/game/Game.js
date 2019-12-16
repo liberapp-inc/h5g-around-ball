@@ -5,7 +5,9 @@ var SAVE_KEY_BESTSCORE = "aroundball-bestScore";
 var BACK_COLOR = 0x6F81DB;
 var FONT_COLOR = 0x000000;
 var PLAYER_RADIUS_PER_W = 0.04;
+var OBSTACLE_RADIUS_PER_W = 0.08;
 var PLAYER_COLOR = 0x00e2de;
+var OBSTACLE_COLOR = 0xffffff;
 var CAMERA_Y_PER_W = -0.4;
 var CAM_PERS_Y_PER_W = -CAMERA_Y_PER_W * 2;
 var WALL_ADD_SPEED = 0.05;
@@ -17,10 +19,17 @@ var Game = (function () {
     function Game() {
     }
     Game.loadSceneGamePlay = function () {
-        Game.speed = 3;
+        Game.shotspeed = 0.2;
+        Game.circlespeed = 1.5;
         Camera2D.x = Util.w(-0.5);
         Camera2D.y = Util.h(-0.5);
         new Player();
+        Player.I.setStateInitial();
+        var n;
+        for (n = 0; n < 4; n++) {
+            new Obstacle();
+        }
+        Wave.ObstacleSet();
         new StartScene();
     };
     return Game;

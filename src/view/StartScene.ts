@@ -21,7 +21,10 @@ class StartScene extends GameObject{
     update() {}
     tap(e:egret.TouchEvent){
         Player.I.setStateRun();
-         
+         var n;
+          for (n = 0; n < Obstacle.I.length; n++) {
+              Obstacle.I[n].setStateRun();
+            }
         this.destroy();
     }
 }

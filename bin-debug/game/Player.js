@@ -19,8 +19,9 @@ var Player = (function (_super) {
         _this.state = _this.stateNone;
         Player.I = _this;
         _this.x = 0;
-        _this.y = 300;
+        _this.y = 0;
         _this.z = 0;
+        _this.currentNum = 0;
         _this.radius = Util.w(PLAYER_RADIUS_PER_W);
         _this.ball = new Ball(_this.x, _this.y, _this.z, _this.radius, PLAYER_COLOR);
         _this.button = new Button(null, 0, 0, 0.5, 0.5, 1, 1, 0x000000, 0.0, null); // 透明な全画面ボタン
@@ -40,13 +41,41 @@ var Player = (function (_super) {
     };
     Player.prototype.stateNone = function () {
     };
+    Player.prototype.setStateInitial = function () {
+        this.state = this.stateInitial;
+    };
+    Player.prototype.stateInitial = function () {
+        this.angleRad += 1 * Math.PI / 180 * Game.circlespeed;
+        var num = Util.w(OBSTACLE_RADIUS_PER_W) + Util.w(PLAYER_RADIUS_PER_W);
+        this.x = num * Math.cos(this.angleRad) + Obstacle.I[this.currentNum].x;
+        this.y = num * Math.sin(this.angleRad) + Obstacle.I[this.currentNum].y;
+        console.log(Math.atan(-100 / -100) / (Math.PI / 180));
+    };
     Player.prototype.setStateRun = function () {
         this.state = this.stateRun;
     };
+    Player.prototype.setStateShot = function () {
+        this.addX = this.x - Obstacle.I[this.currentNum].x;
+        this.addY = this.y - Obstacle.I[this.currentNum].y;
+        this.state = this.StateShot;
+    };
+    Player.prototype.StateShot = function () {
+        this.x += this.addX * Game.shotspeed;
+        this.y += this.addY * Game.shotspeed;
+        if (Obstacle.detectObstacle(this.x, this.y)) {
+            //this.angleRad = Math.atan(this.y-Obstacle.I[this.currentNum].y/this.x-Obstacle.I[this.currentNum].x/(Math.PI / 180));
+            this.state = this.setStateRun;
+        }
+    };
     Player.prototype.stateRun = function () {
-        this.angleRad += 1 * Math.PI / 180;
-        this.x = 100 * Math.cos(this.angleRad) + 0;
-        this.y = 100 * Math.sin(this.angleRad) + 0;
+        if (this.button.press) {
+            this.state = this.setStateShot;
+        }
+        this.angleRad += 1 * Math.PI / 180 * Game.circlespeed;
+        var num = Util.w(OBSTACLE_RADIUS_PER_W) + Util.w(PLAYER_RADIUS_PER_W);
+        this.x = num * Math.cos(this.angleRad) + Obstacle.I[this.currentNum].x;
+        this.y = num * Math.sin(this.angleRad) + Obstacle.I[this.currentNum].y;
+        console.log(this.angleRad);
     };
     Player.prototype.setStateMiss = function () {
     };
