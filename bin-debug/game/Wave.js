@@ -13,7 +13,10 @@ r.prototype = e.prototype, t.prototype = new r();
 var Wave = (function (_super) {
     __extends(Wave, _super);
     function Wave() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        Wave.I = _this;
+        _this.highestPosi = 0;
+        return _this;
     }
     Wave.prototype.update = function () {
         //    if(Game.obstacledistance >= 0){
@@ -26,15 +29,24 @@ var Wave = (function (_super) {
             var num = 300;
             var _num = -300;
             Obstacle.I[n].y = num + n * _num;
-            var result = this.getRandom(-50, 50);
+            var result = this.getRandom(-100, 100);
             Obstacle.I[n].x = result;
             Obstacle.I[n].ball.perspective(Obstacle.I[n].x, Obstacle.I[n].y, 0);
+            if (n == Obstacle.I.length) {
+                Wave.I.highestPosi = Obstacle.I[n].y;
+            }
         }
+    };
+    Wave.ObstacleUpdate = function () {
+        Obstacle.I[Player.I.currentNum].y = Wave.I.highestPosi - 300;
+        var result = this.getRandom(-100, 100);
+        Obstacle.I[Player.I.currentNum].x = result;
     };
     Wave.getRandom = function (min, max) {
         var random = Math.floor(Math.random() * (max + 1 - min)) + min;
         return random;
     };
+    Wave.I = null;
     return Wave;
 }(GameObject));
 __reflect(Wave.prototype, "Wave");

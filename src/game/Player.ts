@@ -12,9 +12,9 @@ class Player extends GameObject{
     addX:number;
     addY:number;
 
-    currentNum:number;
-
-
+    currentNum:number = 0;
+    cameraPosition:number = 0;
+    cameraOffset:number = -700;
     button:Button = null;
     state:()=>void = this.stateNone;
 
@@ -40,6 +40,7 @@ class Player extends GameObject{
 
     update(){    
         this.state();
+        this.cameraSet();
         this.ball.perspective( this.x, this.y, 0 );
     }
 
@@ -53,11 +54,11 @@ class Player extends GameObject{
         this.state = this.stateInitial;
     }
     stateInitial(){
-        this.angleRad += 1 * Math.PI / 180 * Game.circlespeed;
+        this.angleRad +=  1 * Math.PI / 180;
         var num = Util.w(OBSTACLE_RADIUS_PER_W)+ Util.w(PLAYER_RADIUS_PER_W);
         this.x = num * Math.cos(this.angleRad) + Obstacle.I[this.currentNum].x;
         this.y = num * Math.sin(this.angleRad) + Obstacle.I[this.currentNum].y;
-        console.log (Math.atan(-100/-100)/(Math.PI / 180));
+        
     }
     setStateRun(){
         this.state = this.stateRun;
@@ -66,17 +67,57 @@ class Player extends GameObject{
         this.addX = this.x - Obstacle.I[this.currentNum].x;
         this.addY = this.y - Obstacle.I[this.currentNum].y;
         this.state = this.StateShot;
+        this.radius = 0;
+        //Wave.ObstacleUpdate();
+        console.log (this.x + "//"+ Obstacle.I[this.currentNum].x);
     }
     StateShot(){
         this.x += this.addX *Game.shotspeed;
         this.y += this.addY *Game.shotspeed;
          if( Obstacle.detectObstacle( this.x, this.y )){
-           
-            //this.angleRad = Math.atan(this.y-Obstacle.I[this.currentNum].y/this.x-Obstacle.I[this.currentNum].x/(Math.PI / 180));
-            this.state = this.setStateRun;
-             
+             if(Obstacle.I[this.currentNum].x > this.x){
+             if(Obstacle.I[this.currentNum].y < this.y){
+                 var numY = Obstacle.I[this.currentNum].y - this.y;
+                 var numX = Obstacle.I[this.currentNum].x - this.x;
+                 var tan = Math.atan(numY/ numX);
+                 tan = Math.abs(tan) ;
+                 var angle = (180 * (Math.PI / 180)) - tan ;
+                 this.angleRad = angle ;
+             }  
+             else if(Obstacle.I[this.currentNum].y >= this.y){
+                 var numY = Obstacle.I[this.currentNum].y - this.y;
+                 var numX = Obstacle.I[this.currentNum].x - this.x;
+                 var tan = Math.atan(numY/ numX);
+                 tan = Math.abs(tan) ;
+                 var angle = (180 * (Math.PI / 180)) + tan ;
+                 this.angleRad = angle ;
+             }
 
-        
+             }
+             else if( Obstacle.I[this.currentNum].x <= this.x){
+                 if(Obstacle.I[this.currentNum].y < this.y){
+                     var numY = Obstacle.I[this.currentNum].y - this.y;
+                     var numX = Obstacle.I[this.currentNum].x - this.x;
+                     var tan = Math.atan(numY/ numX);
+                     this.angleRad =  Math.abs(tan);
+                    }
+                    
+                    else if(Obstacle.I[this.currentNum].y >= this.y){
+                        var numY = Obstacle.I[this.currentNum].y - this.y;
+                        var numX = Obstacle.I[this.currentNum].x - this.x;
+                        var tan = Math.atan(numY/ numX);
+                            tan = Math.abs(tan) ;
+                        var angle = (360 * (Math.PI / 180)) - tan;
+                        this.angleRad = angle ;
+                    
+                }
+
+             }
+
+
+
+
+            this.state = this.setStateRun;
         }
 
 
@@ -85,19 +126,27 @@ class Player extends GameObject{
     stateRun() {
                   if( this.button.press ){
             this.state = this.setStateShot;
-        }
 
-       
-               this.angleRad += 1 * Math.PI / 180 * Game.circlespeed;
+        } 
+               this.angleRad += 1 * Math.PI / 180 ;//* Game.circlespeed;
                var num = Util.w(OBSTACLE_RADIUS_PER_W)+ Util.w(PLAYER_RADIUS_PER_W);
                this.x = num * Math.cos(this.angleRad) + Obstacle.I[this.currentNum].x;
                this.y = num * Math.sin(this.angleRad) + Obstacle.I[this.currentNum].y;
-               console.log (this.angleRad);
+               
     }
 
     setStateMiss(){
     }
     stateMiss(){
+
+    }
+
+
+    cameraSet(){
+        if(this.cameraPosition > this.y){
+            this.cameraPosition = this.y
+        }
+         Camera2D.y = this.cameraPosition + this.cameraOffset;
     }
 
 
