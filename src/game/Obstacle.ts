@@ -12,17 +12,14 @@ class Obstacle extends GameObject{
         super();
         Obstacle.I.push(this);     
         this.x = 0;
-        this.y = 300;
+        this.y = 0;
         this.z = 0;
         this.radius = Util.w(OBSTACLE_RADIUS_PER_W);
         this.ball = new Ball( this.x, this.y, this.z, this.radius, OBSTACLE_COLOR);
-
     }
     onDestroy(){
         this.ball.destroy();
          Obstacle.I= [];
-
-
     }
     update(){    
         this.state();

@@ -31,6 +31,7 @@ var Game = (function () {
         }
         Wave.ObstacleSet();
         new StartScene();
+        new Score();
     };
     return Game;
 }());

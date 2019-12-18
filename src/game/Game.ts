@@ -29,10 +29,12 @@ class Game {
             }
         Wave.ObstacleSet();
         new StartScene();
+        new Score();
       
     }
    
     static circlespeed:number;
     static shotspeed: number;
+    static highestPosi: number;
 
 }

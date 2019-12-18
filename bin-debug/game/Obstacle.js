@@ -17,7 +17,7 @@ var Obstacle = (function (_super) {
         _this.state = _this.stateNone;
         Obstacle.I.push(_this);
         _this.x = 0;
-        _this.y = 300;
+        _this.y = 0;
         _this.z = 0;
         _this.radius = Util.w(OBSTACLE_RADIUS_PER_W);
         _this.ball = new Ball(_this.x, _this.y, _this.z, _this.radius, OBSTACLE_COLOR);

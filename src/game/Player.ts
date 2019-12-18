@@ -42,6 +42,7 @@ class Player extends GameObject{
         this.state();
         this.cameraSet();
         this.ball.perspective( this.x, this.y, 0 );
+        //console.log(this.x)
     }
 
     setStateNone(){
@@ -68,13 +69,29 @@ class Player extends GameObject{
         this.addY = this.y - Obstacle.I[this.currentNum].y;
         this.state = this.StateShot;
         this.radius = 0;
-        //Wave.ObstacleUpdate();
-        console.log (this.x + "//"+ Obstacle.I[this.currentNum].x);
+        Wave.ObstacleUpdate();
+
     }
     StateShot(){
+        console.log(Obstacle.I[this.currentNum].y );
+        console.log(this.y);
+        console.log(this.currentNum);
         this.x += this.addX *Game.shotspeed;
         this.y += this.addY *Game.shotspeed;
+        var index = this.currentNum;
+        if(index >=3){
+            index = 0;
+        }
+        if(this.x < -320 ||
+           320 < this.x  ||
+           this.y > Obstacle.I[index+1].y + 800||
+           this.y < Obstacle.I[index+1].y - Util.w(OBSTACLE_RADIUS_PER_W) - Util.w(PLAYER_RADIUS_PER_W)
+           ){
+           this.state = this.setStateMiss;
+        }
+        if(this.y > Obstacle.I[this.currentNum].y + 300)
          if( Obstacle.detectObstacle( this.x, this.y )){
+             Score.I.addPoint();
              if(Obstacle.I[this.currentNum].x > this.x){
              if(Obstacle.I[this.currentNum].y < this.y){
                  var numY = Obstacle.I[this.currentNum].y - this.y;
@@ -108,10 +125,8 @@ class Player extends GameObject{
                         var tan = Math.atan(numY/ numX);
                             tan = Math.abs(tan) ;
                         var angle = (360 * (Math.PI / 180)) - tan;
-                        this.angleRad = angle ;
-                    
+                        this.angleRad = angle ;  
                 }
-
              }
 
 
@@ -136,6 +151,9 @@ class Player extends GameObject{
     }
 
     setStateMiss(){
+        this.state = this.stateMiss;
+        new GameOver();
+        EffectLine.create( this.x, this.y, this.radius, PLAYER_COLOR, 4 );
     }
     stateMiss(){
 

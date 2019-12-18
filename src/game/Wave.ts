@@ -3,12 +3,9 @@
 class Wave extends GameObject{
 
     static I:Wave = null;
-    highestPosi:number;
 
     constructor() {
         super();
-        Wave.I = this;
-        this.highestPosi = 0;
     }
     update() {
         
@@ -26,17 +23,19 @@ class Wave extends GameObject{
               Obstacle.I[n].x = result;
               Obstacle.I[n].ball.perspective(  Obstacle.I[n].x,  Obstacle.I[n].y, 0 );
 
-              if(n == Obstacle.I.length){  
-                 Wave.I.highestPosi = Obstacle.I[n].y;
+              if(n == Obstacle.I.length-1){  
+                 Game.highestPosi = Obstacle.I[n].y;
+                 console.log(Game.highestPosi+ "//"+Obstacle.I[n].y);
               }
             }
     }
 
     static ObstacleUpdate(){
-        Obstacle.I[Player.I.currentNum].y = Wave.I.highestPosi -300;
+        Game.highestPosi += -300;
+        Obstacle.I[Player.I.currentNum].y = Game.highestPosi ;
          var result = this.getRandom( -100, 100);
         Obstacle.I[Player.I.currentNum].x = result;
-        
+        console.log(Game.highestPosi );
 
     }
     static getRandom( min, max ) {
