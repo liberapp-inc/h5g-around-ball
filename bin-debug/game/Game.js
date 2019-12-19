@@ -10,17 +10,20 @@ var PLAYER_COLOR = 0x00e2de;
 var OBSTACLE_COLOR = 0xffffff;
 var CAMERA_Y_PER_W = -0.4;
 var CAM_PERS_Y_PER_W = -CAMERA_Y_PER_W * 2;
-var WALL_ADD_SPEED = 0.05;
-var WALL_MAX_SPEED = 1;
+var PLAYER_ADD_SPEED = 0.05;
+var PLAYER_MAX_SPEED = 4;
 var WALL_WIDTH_W = 50;
 var OBSTACLE_ADD_SPEED = 0.1;
-var OBSTACLE_MAX_SPEED = 10;
+var OBSTACLE_MAX_SPEED = 5;
+var OBSTACLE_MAX_POSITION = 250;
 var Game = (function () {
     function Game() {
     }
     Game.loadSceneGamePlay = function () {
         Game.shotspeed = 0.2;
         Game.circlespeed = 1.5;
+        Game.circledirection = 1;
+        Game.obstaclespeed = 1;
         Camera2D.x = Util.w(-0.5);
         Camera2D.y = Util.h(-0.5);
         new Player();
@@ -28,6 +31,10 @@ var Game = (function () {
         var n;
         for (n = 0; n < 4; n++) {
             new Obstacle();
+        }
+        var i;
+        for (i = 0; i < Obstacle.I.length; i++) {
+            Obstacle.I[i].setStateRun();
         }
         Wave.ObstacleSet();
         new StartScene();

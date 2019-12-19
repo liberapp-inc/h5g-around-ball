@@ -7,6 +7,7 @@ class Obstacle extends GameObject{
     radius:number;
     ball:Ball = null;
     point:boolean = null;
+    direction:number;
     state:()=>void = this.stateNone;
     constructor() {
         super();
@@ -14,6 +15,7 @@ class Obstacle extends GameObject{
         this.x = 0;
         this.y = 0;
         this.z = 0;
+        this.direction = 1;
         this.radius = Util.w(OBSTACLE_RADIUS_PER_W);
         this.ball = new Ball( this.x, this.y, this.z, this.radius, OBSTACLE_COLOR);
     }
@@ -34,7 +36,13 @@ class Obstacle extends GameObject{
         this.state = this.stateRun;   
     }
     stateRun() {   
-        
+        if(-1200 > this.y ){
+        this.x += Game.obstaclespeed * this.direction;
+        if(this.x < -OBSTACLE_MAX_POSITION|| this.x > OBSTACLE_MAX_POSITION ){
+            this.direction = this.direction * -1;
+        }
+
+        }
     }
 
     static detectObstacle( x:number, y:number ):boolean { 

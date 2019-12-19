@@ -84,7 +84,15 @@ var Player = (function (_super) {
         if (this.y > Obstacle.I[this.currentNum].y + 300)
             if (Obstacle.detectObstacle(this.x, this.y)) {
                 Score.I.addPoint();
+                if (PLAYER_MAX_SPEED > Game.circlespeed) {
+                    Game.circlespeed += PLAYER_ADD_SPEED;
+                    console.log(Game.circlespeed);
+                }
+                if (OBSTACLE_MAX_SPEED > Game.obstaclespeed && Score.I.point > 5) {
+                    Game.obstaclespeed += OBSTACLE_ADD_SPEED;
+                }
                 if (Obstacle.I[this.currentNum].x > this.x) {
+                    Game.circledirection = 1;
                     if (Obstacle.I[this.currentNum].y < this.y) {
                         var numY = Obstacle.I[this.currentNum].y - this.y;
                         var numX = Obstacle.I[this.currentNum].x - this.x;
@@ -103,6 +111,7 @@ var Player = (function (_super) {
                     }
                 }
                 else if (Obstacle.I[this.currentNum].x <= this.x) {
+                    Game.circledirection = -1;
                     if (Obstacle.I[this.currentNum].y < this.y) {
                         var numY = Obstacle.I[this.currentNum].y - this.y;
                         var numX = Obstacle.I[this.currentNum].x - this.x;
@@ -125,7 +134,7 @@ var Player = (function (_super) {
         if (this.button.press) {
             this.state = this.setStateShot;
         }
-        this.angleRad += 1 * Math.PI / 180; //* Game.circlespeed;
+        this.angleRad += Game.circledirection * Game.circlespeed * Math.PI / 180;
         var num = Util.w(OBSTACLE_RADIUS_PER_W) + Util.w(PLAYER_RADIUS_PER_W);
         this.x = num * Math.cos(this.angleRad) + Obstacle.I[this.currentNum].x;
         this.y = num * Math.sin(this.angleRad) + Obstacle.I[this.currentNum].y;
@@ -133,9 +142,10 @@ var Player = (function (_super) {
     Player.prototype.setStateMiss = function () {
         this.state = this.stateMiss;
         new GameOver();
-        EffectLine.create(this.x, this.y, this.radius, PLAYER_COLOR, 4);
+        EffectLine.create(this.x, this.y, 20, PLAYER_COLOR, 4);
     };
     Player.prototype.stateMiss = function () {
+        this.y = 800;
     };
     Player.prototype.cameraSet = function () {
         if (this.cameraPosition > this.y) {

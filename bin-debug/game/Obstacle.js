@@ -19,6 +19,7 @@ var Obstacle = (function (_super) {
         _this.x = 0;
         _this.y = 0;
         _this.z = 0;
+        _this.direction = 1;
         _this.radius = Util.w(OBSTACLE_RADIUS_PER_W);
         _this.ball = new Ball(_this.x, _this.y, _this.z, _this.radius, OBSTACLE_COLOR);
         return _this;
@@ -40,6 +41,12 @@ var Obstacle = (function (_super) {
         this.state = this.stateRun;
     };
     Obstacle.prototype.stateRun = function () {
+        if (-1200 > this.y) {
+            this.x += Game.obstaclespeed * this.direction;
+            if (this.x < -OBSTACLE_MAX_POSITION || this.x > OBSTACLE_MAX_POSITION) {
+                this.direction = this.direction * -1;
+            }
+        }
     };
     Obstacle.detectObstacle = function (x, y) {
         var flag = false;

@@ -33,7 +33,7 @@ class Wave extends GameObject{
     static ObstacleUpdate(){
         Game.highestPosi += -300;
         Obstacle.I[Player.I.currentNum].y = Game.highestPosi ;
-         var result = this.getRandom( -100, 100);
+         var result = this.getRandom( -OBSTACLE_MAX_POSITION, OBSTACLE_MAX_POSITION);
         Obstacle.I[Player.I.currentNum].x = result;
         console.log(Game.highestPosi );
 
