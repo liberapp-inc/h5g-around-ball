@@ -66,13 +66,10 @@ var Player = (function (_super) {
         Wave.ObstacleUpdate();
     };
     Player.prototype.StateShot = function () {
-        console.log(Obstacle.I[this.currentNum].y);
-        console.log(this.y);
-        console.log(this.currentNum);
         this.x += this.addX * Game.shotspeed;
         this.y += this.addY * Game.shotspeed;
         var index = this.currentNum;
-        if (index >= 3) {
+        if (index >= OBSTACLE_COUNTS - 1) {
             index = 0;
         }
         if (this.x < -320 ||
@@ -88,7 +85,7 @@ var Player = (function (_super) {
                     Game.circlespeed += PLAYER_ADD_SPEED;
                     console.log(Game.circlespeed);
                 }
-                if (OBSTACLE_MAX_SPEED > Game.obstaclespeed && Score.I.point > 5) {
+                if (OBSTACLE_MAX_SPEED > Game.obstaclespeed && Game.obstaclemove) {
                     Game.obstaclespeed += OBSTACLE_ADD_SPEED;
                 }
                 if (Obstacle.I[this.currentNum].x > this.x) {

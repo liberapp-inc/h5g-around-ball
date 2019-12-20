@@ -73,13 +73,10 @@ class Player extends GameObject{
 
     }
     StateShot(){
-        console.log(Obstacle.I[this.currentNum].y );
-        console.log(this.y);
-        console.log(this.currentNum);
         this.x += this.addX *Game.shotspeed;
         this.y += this.addY *Game.shotspeed;
         var index = this.currentNum;
-        if(index >=3){
+        if(index >=OBSTACLE_COUNTS -1){
             index = 0;
         }
         if(this.x < -320 ||
@@ -92,11 +89,12 @@ class Player extends GameObject{
         if(this.y > Obstacle.I[this.currentNum].y + 300)
          if( Obstacle.detectObstacle( this.x, this.y )){
              Score.I.addPoint();
+            
              if(PLAYER_MAX_SPEED > Game.circlespeed){
                  Game.circlespeed += PLAYER_ADD_SPEED;
                  console.log(Game.circlespeed);
              }
-             if(OBSTACLE_MAX_SPEED > Game.obstaclespeed && Score.I.point > 5){
+             if(OBSTACLE_MAX_SPEED > Game.obstaclespeed && Game.obstaclemove){
                  Game.obstaclespeed += OBSTACLE_ADD_SPEED;
 
              }

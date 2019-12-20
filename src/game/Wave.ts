@@ -17,7 +17,7 @@ class Wave extends GameObject{
         var n;
         for (n = 0; n < Obstacle.I.length; n++) {
             var num = 300;
-            var _num = -300;
+            var _num = -Game.obstacledistance;
               Obstacle.I[n].y = num + n *_num;
               var result = this.getRandom( -100, 100);
               Obstacle.I[n].x = result;
@@ -31,11 +31,16 @@ class Wave extends GameObject{
     }
 
     static ObstacleUpdate(){
-        Game.highestPosi += -300;
+        new EffectCircle( Obstacle.I[Player.I.currentNum ].x, Obstacle.I[Player.I.currentNum].y, Obstacle.I[Player.I.currentNum].radius, OBSTACLE_COLOR );
+        if(OBSTACLE_MAX_DISTANCE > Game.obstacledistance){
+            Game.obstacledistance += OBSTACLE_ADD_DISTANCE;
+        }
+
+        Game.highestPosi += -Game.obstacledistance;
         Obstacle.I[Player.I.currentNum].y = Game.highestPosi ;
          var result = this.getRandom( -OBSTACLE_MAX_POSITION, OBSTACLE_MAX_POSITION);
         Obstacle.I[Player.I.currentNum].x = result;
-        console.log(Game.highestPosi );
+        
 
     }
     static getRandom( min, max ) {

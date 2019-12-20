@@ -41,7 +41,7 @@ var GameOver = (function (_super) {
     GameOver.prototype.update = function () {
         this.step++;
         if (this.step == this.fadeInFrame) {
-            this.retryButton = new Button("リトライ", Util.width / 16, FONT_COLOR, 0.50, 0.55, 0.4, 0.1, 0xffffff, 1.0, this.onTapRetry);
+            this.retryButton = new Button("リトライ", Util.width / 16, BACK_COLOR, 0.50, 0.55, 0.4, 0.1, 0xD1E1E2, 1.0, this.onTapRetry);
             if (Score.I.point > Score.I.bestScore) {
                 egret.localStorage.setItem(SAVE_KEY_BESTSCORE, Score.I.point.toFixed()); // string
                 this.texts[1] = Util.newTextField("NEW RECORD!", Util.width / 13, FONT_COLOR, 0.5, 0.4, true, false);

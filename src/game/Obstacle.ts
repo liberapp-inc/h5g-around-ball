@@ -37,6 +37,7 @@ class Obstacle extends GameObject{
     }
     stateRun() {   
         if(-1200 > this.y ){
+            Game.obstaclemove =true;
         this.x += Game.obstaclespeed * this.direction;
         if(this.x < -OBSTACLE_MAX_POSITION|| this.x > OBSTACLE_MAX_POSITION ){
             this.direction = this.direction * -1;
