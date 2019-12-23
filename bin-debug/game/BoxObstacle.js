@@ -8,41 +8,41 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var Obstacle = (function (_super) {
-    __extends(Obstacle, _super);
-    function Obstacle() {
+var BoxObstacle = (function (_super) {
+    __extends(BoxObstacle, _super);
+    function BoxObstacle() {
         var _this = _super.call(this) || this;
-        _this.ball = null;
-        _this.point = null;
+        _this.rect = null;
         _this.state = _this.stateNone;
-        Obstacle.I.push(_this);
+        BoxObstacle.I.push(_this);
         _this.x = 0;
         _this.y = 0;
-        _this.z = 0;
-        _this.speed = 0;
+        _this.w = BOXOBSTACLE_LENGTH;
+        _this.h = BOXOBSTACLE_LENGTH;
+        _this.color = OBSTACLE_COLOR;
         _this.move = false;
+        _this.speed = 0;
         _this.direction = 1;
-        _this.radius = Util.w(OBSTACLE_RADIUS_PER_W);
-        _this.ball = new Ball(_this.x, _this.y, _this.z, _this.radius, OBSTACLE_COLOR);
+        _this.rect = new Rect(_this.x, _this.y, _this.w, _this.h, _this.color);
         return _this;
     }
-    Obstacle.prototype.onDestroy = function () {
-        this.ball.destroy();
+    BoxObstacle.prototype.onDestroy = function () {
+        this.rect.destroy();
         Obstacle.I = [];
     };
-    Obstacle.prototype.update = function () {
+    BoxObstacle.prototype.update = function () {
         this.state();
-        this.ball.perspective(this.x, this.y, 0);
+        this.rect.perspective(this.x, this.y, 0);
     };
-    Obstacle.prototype.setStateNone = function () {
+    BoxObstacle.prototype.setStateNone = function () {
         this.state = this.stateNone;
     };
-    Obstacle.prototype.stateNone = function () {
+    BoxObstacle.prototype.stateNone = function () {
     };
-    Obstacle.prototype.setStateRun = function () {
+    BoxObstacle.prototype.setStateRun = function () {
         this.state = this.stateRun;
     };
-    Obstacle.prototype.stateRun = function () {
+    BoxObstacle.prototype.stateRun = function () {
         if (this.move) {
             this.x += this.speed * this.direction;
             if (this.x < -Game.obstacleposition || this.x > Game.obstacleposition) {
@@ -50,7 +50,7 @@ var Obstacle = (function (_super) {
             }
         }
     };
-    Obstacle.detectObstacle = function (x, y) {
+    BoxObstacle.detectObstacle = function (x, y) {
         var flag = false;
         var r = Util.w(PLAYER_RADIUS_PER_W);
         var _r = Util.w(OBSTACLE_RADIUS_PER_W);
@@ -68,12 +68,12 @@ var Obstacle = (function (_super) {
         }
         return flag;
     };
-    Obstacle.prototype.setStateMiss = function () {
+    BoxObstacle.prototype.setStateMiss = function () {
     };
-    Obstacle.prototype.stateMiss = function () {
+    BoxObstacle.prototype.stateMiss = function () {
     };
-    Obstacle.I = [];
-    return Obstacle;
+    BoxObstacle.I = [];
+    return BoxObstacle;
 }(GameObject));
-__reflect(Obstacle.prototype, "Obstacle");
-//# sourceMappingURL=Obstacle.js.map
+__reflect(BoxObstacle.prototype, "BoxObstacle");
+//# sourceMappingURL=BoxObstacle.js.map

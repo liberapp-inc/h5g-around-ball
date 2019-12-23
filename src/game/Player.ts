@@ -81,7 +81,7 @@ class Player extends GameObject{
         }
         if(this.x < -320 ||
            320 < this.x  ||
-           this.y > Obstacle.I[index+1].y + 800||
+           this.y > Game.launchedposition + 400||
            this.y < Obstacle.I[index+1].y - Util.w(OBSTACLE_RADIUS_PER_W) - Util.w(PLAYER_RADIUS_PER_W)
            ){
            this.state = this.setStateMiss;

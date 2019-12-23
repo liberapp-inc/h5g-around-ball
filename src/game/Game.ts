@@ -16,6 +16,8 @@ const OBSTACLE_COUNTS = 7;
 const OBSTACLE_ADD_DISTANCE = 10;
 const OBSTACLE_MAX_DISTANCE = 600;
 const OBSTACLE_MAX_POSITION = 250;
+const OBSTACLE_ADD_POSITION = 5;
+const BOXOBSTACLE_LENGTH = 50;
 
 
 
@@ -26,8 +28,10 @@ class Game {
         Game.shotspeed = 0.2;
         Game.circlespeed = 1.5;
         Game.circledirection = 1;
-        Game.obstaclespeed = 0.2;
+        Game.obstaclespeed = 0.3;
         Game.obstacledistance = 200;
+        Game.obstacleposition = 100;
+        Game.launchedposition = 0;
         Camera2D.x = Util.w(-0.5);
         Camera2D.y = Util.h(-0.5);
 
@@ -43,6 +47,11 @@ class Game {
             }
             
         Wave.ObstacleSet();
+
+        var n
+        for (n = 0; n < 1; n++) {           
+            new BoxObstacle();
+            }
         new StartScene();
         new Score();
       
@@ -55,4 +64,6 @@ class Game {
     static obstaclespeed:number;
     static obstacledistance:number;
     static obstaclemove:boolean;
+    static obstacleposition:number;
+    static launchedposition:number;
 }

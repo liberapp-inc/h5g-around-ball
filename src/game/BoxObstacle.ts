@@ -1,35 +1,37 @@
-class Obstacle extends GameObject{
+class BoxObstacle extends GameObject{
 
-    static I:Obstacle[] = [];
+    static I:BoxObstacle[] = [];
     x:number;
     y:number;
-    z:number;
-    radius:number;
-    ball:Ball = null;
-    point:boolean = null;
-    direction:number;
-    move:boolean;
+    w:number;
+    h:number;
     speed:number;
+    move:boolean;
+    color:number;
+    direction:number;
+    rect:Rect = null;
     state:()=>void = this.stateNone;
     constructor() {
         super();
-        Obstacle.I.push(this);     
+        BoxObstacle.I.push(this);     
         this.x = 0;
         this.y = 0;
-        this.z = 0;
-        this.speed = 0;
+        this.w = BOXOBSTACLE_LENGTH;
+        this.h = BOXOBSTACLE_LENGTH;
+        this.color = OBSTACLE_COLOR;
         this.move = false;
+        this.speed = 0;
         this.direction = 1;
-        this.radius = Util.w(OBSTACLE_RADIUS_PER_W);
-        this.ball = new Ball( this.x, this.y, this.z, this.radius, OBSTACLE_COLOR);
+
+        this.rect = new Rect( this.x, this.y, this.w, this.h, this.color );
     }
     onDestroy(){
-        this.ball.destroy();
+        this.rect.destroy();
          Obstacle.I= [];
     }
     update(){    
         this.state();
-        this.ball.perspective( this.x, this.y, 0 );
+        this.rect.perspective( this.x, this.y, 0 );
     }
     setStateNone(){
         this.state = this.stateNone;

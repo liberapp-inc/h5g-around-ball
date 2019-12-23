@@ -19,6 +19,8 @@ var OBSTACLE_COUNTS = 7;
 var OBSTACLE_ADD_DISTANCE = 10;
 var OBSTACLE_MAX_DISTANCE = 600;
 var OBSTACLE_MAX_POSITION = 250;
+var OBSTACLE_ADD_POSITION = 5;
+var BOXOBSTACLE_LENGTH = 50;
 var Game = (function () {
     function Game() {
     }
@@ -27,8 +29,10 @@ var Game = (function () {
         Game.shotspeed = 0.2;
         Game.circlespeed = 1.5;
         Game.circledirection = 1;
-        Game.obstaclespeed = 0.2;
+        Game.obstaclespeed = 0.3;
         Game.obstacledistance = 200;
+        Game.obstacleposition = 100;
+        Game.launchedposition = 0;
         Camera2D.x = Util.w(-0.5);
         Camera2D.y = Util.h(-0.5);
         new Player();
@@ -42,6 +46,10 @@ var Game = (function () {
             Obstacle.I[i].setStateRun();
         }
         Wave.ObstacleSet();
+        var n;
+        for (n = 0; n < 1; n++) {
+            new BoxObstacle();
+        }
         new StartScene();
         new Score();
     };

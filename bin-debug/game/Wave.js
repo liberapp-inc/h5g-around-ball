@@ -40,9 +40,16 @@ var Wave = (function (_super) {
         if (OBSTACLE_MAX_DISTANCE > Game.obstacledistance) {
             Game.obstacledistance += OBSTACLE_ADD_DISTANCE;
         }
+        if (OBSTACLE_MAX_POSITION > Game.obstacleposition) {
+            // Game.obstacleposition += OBSTACLE_ADD_POSITION
+        }
         Game.highestPosi += -Game.obstacledistance;
         Obstacle.I[Player.I.currentNum].y = Game.highestPosi;
-        var result = this.getRandom(-OBSTACLE_MAX_POSITION, OBSTACLE_MAX_POSITION);
+        if (-1200 > Obstacle.I[Player.I.currentNum].y) {
+            Obstacle.I[Player.I.currentNum].move = true;
+            Obstacle.I[Player.I.currentNum].speed = this.getRandom(0, Game.obstaclespeed);
+        }
+        var result = this.getRandom(-Game.obstacleposition, Game.obstacleposition);
         Obstacle.I[Player.I.currentNum].x = result;
     };
     Wave.getRandom = function (min, max) {
