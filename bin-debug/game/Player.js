@@ -78,54 +78,60 @@ var Player = (function (_super) {
             this.y < Obstacle.I[index + 1].y - Util.w(OBSTACLE_RADIUS_PER_W) - Util.w(PLAYER_RADIUS_PER_W)) {
             this.state = this.setStateMiss;
         }
-        if (this.y > Obstacle.I[this.currentNum].y + 300)
-            if (Obstacle.detectObstacle(this.x, this.y)) {
-                Score.I.addPoint();
-                if (PLAYER_MAX_SPEED > Game.circlespeed) {
-                    Game.circlespeed += PLAYER_ADD_SPEED;
-                    console.log(Game.circlespeed);
-                }
-                if (OBSTACLE_MAX_SPEED > Game.obstaclespeed && Game.obstaclemove) {
-                    Game.obstaclespeed += OBSTACLE_ADD_SPEED;
-                }
-                if (Obstacle.I[this.currentNum].x > this.x) {
-                    Game.circledirection = 1;
-                    if (Obstacle.I[this.currentNum].y < this.y) {
-                        var numY = Obstacle.I[this.currentNum].y - this.y;
-                        var numX = Obstacle.I[this.currentNum].x - this.x;
-                        var tan = Math.atan(numY / numX);
-                        tan = Math.abs(tan);
-                        var angle = (180 * (Math.PI / 180)) - tan;
-                        this.angleRad = angle;
-                    }
-                    else if (Obstacle.I[this.currentNum].y >= this.y) {
-                        var numY = Obstacle.I[this.currentNum].y - this.y;
-                        var numX = Obstacle.I[this.currentNum].x - this.x;
-                        var tan = Math.atan(numY / numX);
-                        tan = Math.abs(tan);
-                        var angle = (180 * (Math.PI / 180)) + tan;
-                        this.angleRad = angle;
-                    }
-                }
-                else if (Obstacle.I[this.currentNum].x <= this.x) {
-                    Game.circledirection = -1;
-                    if (Obstacle.I[this.currentNum].y < this.y) {
-                        var numY = Obstacle.I[this.currentNum].y - this.y;
-                        var numX = Obstacle.I[this.currentNum].x - this.x;
-                        var tan = Math.atan(numY / numX);
-                        this.angleRad = Math.abs(tan);
-                    }
-                    else if (Obstacle.I[this.currentNum].y >= this.y) {
-                        var numY = Obstacle.I[this.currentNum].y - this.y;
-                        var numX = Obstacle.I[this.currentNum].x - this.x;
-                        var tan = Math.atan(numY / numX);
-                        tan = Math.abs(tan);
-                        var angle = (360 * (Math.PI / 180)) - tan;
-                        this.angleRad = angle;
-                    }
-                }
-                this.state = this.setStateRun;
+        //  if(this.y > Obstacle.I[this.currentNum].y + 300)
+        if (BoxObstacle.detectObstacle(this.x, this.y)) {
+            this.state = this.setStateMiss;
+        }
+        if (Obstacle.detectObstacle(this.x, this.y)) {
+            Score.I.addPoint();
+            if (Game.obstacledistance > 200) {
+                Wave.BoxObstacleUpdate();
             }
+            if (PLAYER_MAX_SPEED > Game.circlespeed) {
+                Game.circlespeed += PLAYER_ADD_SPEED;
+                console.log(Game.circlespeed);
+            }
+            if (OBSTACLE_MAX_SPEED > Game.obstaclespeed && Game.obstaclemove) {
+                Game.obstaclespeed += OBSTACLE_ADD_SPEED;
+            }
+            if (Obstacle.I[this.currentNum].x > this.x) {
+                Game.circledirection = 1;
+                if (Obstacle.I[this.currentNum].y < this.y) {
+                    var numY = Obstacle.I[this.currentNum].y - this.y;
+                    var numX = Obstacle.I[this.currentNum].x - this.x;
+                    var tan = Math.atan(numY / numX);
+                    tan = Math.abs(tan);
+                    var angle = (180 * (Math.PI / 180)) - tan;
+                    this.angleRad = angle;
+                }
+                else if (Obstacle.I[this.currentNum].y >= this.y) {
+                    var numY = Obstacle.I[this.currentNum].y - this.y;
+                    var numX = Obstacle.I[this.currentNum].x - this.x;
+                    var tan = Math.atan(numY / numX);
+                    tan = Math.abs(tan);
+                    var angle = (180 * (Math.PI / 180)) + tan;
+                    this.angleRad = angle;
+                }
+            }
+            else if (Obstacle.I[this.currentNum].x <= this.x) {
+                Game.circledirection = -1;
+                if (Obstacle.I[this.currentNum].y < this.y) {
+                    var numY = Obstacle.I[this.currentNum].y - this.y;
+                    var numX = Obstacle.I[this.currentNum].x - this.x;
+                    var tan = Math.atan(numY / numX);
+                    this.angleRad = Math.abs(tan);
+                }
+                else if (Obstacle.I[this.currentNum].y >= this.y) {
+                    var numY = Obstacle.I[this.currentNum].y - this.y;
+                    var numX = Obstacle.I[this.currentNum].x - this.x;
+                    var tan = Math.atan(numY / numX);
+                    tan = Math.abs(tan);
+                    var angle = (360 * (Math.PI / 180)) - tan;
+                    this.angleRad = angle;
+                }
+            }
+            this.state = this.setStateRun;
+        }
     };
     Player.prototype.stateRun = function () {
         if (this.button.press) {

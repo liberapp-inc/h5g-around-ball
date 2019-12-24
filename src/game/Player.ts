@@ -86,9 +86,23 @@ class Player extends GameObject{
            ){
            this.state = this.setStateMiss;
         }
-        if(this.y > Obstacle.I[this.currentNum].y + 300)
+        //  if(this.y > Obstacle.I[this.currentNum].y + 300)
+
+         if( BoxObstacle.detectObstacle( this.x, this.y )){
+             this.state = this.setStateMiss;
+         }
          if( Obstacle.detectObstacle( this.x, this.y )){
              Score.I.addPoint();
+             if(Game.obstacledistance > 200){
+                 
+                 Wave.BoxObstacleUpdate();
+
+
+            }
+
+
+
+
             
              if(PLAYER_MAX_SPEED > Game.circlespeed){
                  Game.circlespeed += PLAYER_ADD_SPEED;
@@ -135,7 +149,14 @@ class Player extends GameObject{
                         var angle = (360 * (Math.PI / 180)) - tan;
                         this.angleRad = angle ;  
                 }
+
              }
+             
+
+
+
+
+
 
 
 

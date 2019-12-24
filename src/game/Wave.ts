@@ -9,6 +9,7 @@ class Wave extends GameObject{
     }
     update() {
         
+
         //    if(Game.obstacledistance >= 0){
         //        Wave.spawn();
         //    }
@@ -51,6 +52,34 @@ class Wave extends GameObject{
         
 
     }
+
+    static BoxObstacleSet(){
+        var n;
+        for (n = 0; n < BoxObstacle.I.length; n++) {
+            BoxObstacle.I[n].y = 600;
+
+        }
+
+    }
+
+     static BoxObstacleUpdate(){
+        var n;
+        for (n = 0; n < BoxObstacle.I.length; n++) {
+            if(BoxObstacle.I[n].y > Player.I.y + 200 ){
+
+                BoxObstacle.I[n].y = Game.highestPosi + Game.obstacledistance/2 ;
+                BoxObstacle.I[n].speed = this.getRandom( 1 , BOXOBSTACLE_SPEED);
+                BoxObstacle.I[n].move = true;
+
+            }
+
+
+        }
+
+     }
+
+
+
     static getRandom( min, max ) {
     var random = Math.floor( Math.random() * (max + 1 - min) ) + min;
     return random;

@@ -32,7 +32,8 @@ var BoxObstacle = (function (_super) {
     };
     BoxObstacle.prototype.update = function () {
         this.state();
-        this.rect.perspective(this.x, this.y, 0);
+        var center = BOXOBSTACLE_LENGTH / 2;
+        this.rect.perspective(this.x - center, this.y - center, 0);
     };
     BoxObstacle.prototype.setStateNone = function () {
         this.state = this.stateNone;
@@ -45,27 +46,22 @@ var BoxObstacle = (function (_super) {
     BoxObstacle.prototype.stateRun = function () {
         if (this.move) {
             this.x += this.speed * this.direction;
-            if (this.x < -Game.obstacleposition || this.x > Game.obstacleposition) {
+            if (this.x < -OBSTACLE_MAX_POSITION || this.x > OBSTACLE_MAX_POSITION) {
                 this.direction = this.direction * -1;
             }
         }
     };
     BoxObstacle.detectObstacle = function (x, y) {
         var flag = false;
-        var r = Util.w(PLAYER_RADIUS_PER_W);
-        var _r = Util.w(OBSTACLE_RADIUS_PER_W);
-        var n;
-        for (n = 0; n < Obstacle.I.length; n++) {
-            var dx = Obstacle.I[n].x - x;
-            var dy = Obstacle.I[n].y - y;
-            var c = Math.sqrt(dx * dx + dy * dy);
-            if (c <= r + _r) {
-                Game.launchedposition = Obstacle.I[n].y;
+        var r = BOXOBSTACLE_LENGTH / 2 + Util.w(PLAYER_RADIUS_PER_W);
+        var rr = Math.pow(r, 2);
+        BoxObstacle.I.forEach(function (p) {
+            var dx = p.x - x;
+            var dy = p.y - y;
+            if (Math.pow(dx, 2) <= rr && Math.pow(dy, 2) <= rr) {
                 flag = true;
-                Player.I.currentNum = n;
-                console.log("c" + c + "r+r" + r + _r);
             }
-        }
+        });
         return flag;
     };
     BoxObstacle.prototype.setStateMiss = function () {

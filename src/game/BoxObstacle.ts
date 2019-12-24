@@ -31,7 +31,8 @@ class BoxObstacle extends GameObject{
     }
     update(){    
         this.state();
-        this.rect.perspective( this.x, this.y, 0 );
+        var center = BOXOBSTACLE_LENGTH/2;
+        this.rect.perspective( this.x - center, this.y - center, 0 );
     }
     setStateNone(){
         this.state = this.stateNone;
@@ -44,39 +45,28 @@ class BoxObstacle extends GameObject{
     stateRun() {   
         if(this.move){
         this.x += this.speed * this.direction;
-        if(this.x < -Game.obstacleposition|| this.x > Game.obstacleposition ){
+        if(this.x < -OBSTACLE_MAX_POSITION|| this.x > OBSTACLE_MAX_POSITION){
             this.direction = this.direction * -1;
         }
 
         }
     }
 
+
+
     static detectObstacle( x:number, y:number ):boolean { 
-        let flag = false;
-        const r = Util.w(PLAYER_RADIUS_PER_W );
-        const _r = Util.w(OBSTACLE_RADIUS_PER_W);
-        var n;
-        for (n = 0; n < Obstacle.I.length; n++) {           
+        let flag = false;//一度ぶつかったら次から問題発生
+        const r = BOXOBSTACLE_LENGTH /2 + Util.w(PLAYER_RADIUS_PER_W);
+        const rr = r ** 2;
+        BoxObstacle.I.forEach( p => {
+            let dx = p.x - x;
+            let dy = p.y - y;
+            if( dx ** 2 <= rr && dy ** 2 <= rr){
 
-
-            let dx = Obstacle.I[n].x - x;
-            let dy = Obstacle.I[n].y - y;
-            let c = Math.sqrt(dx*dx +dy*dy);
-            if( c <= r+_r ){
-                    Game.launchedposition = Obstacle.I[n].y;
                     flag = true;
-                    Player.I.currentNum = n ;
-                    console.log("c"+ c+ "r+r"+r+_r);
 
             }
-
-
-
-            }
-
-
-       
-
+        });
         return flag;
     }
     setStateMiss(){

@@ -52,6 +52,22 @@ var Wave = (function (_super) {
         var result = this.getRandom(-Game.obstacleposition, Game.obstacleposition);
         Obstacle.I[Player.I.currentNum].x = result;
     };
+    Wave.BoxObstacleSet = function () {
+        var n;
+        for (n = 0; n < BoxObstacle.I.length; n++) {
+            BoxObstacle.I[n].y = 600;
+        }
+    };
+    Wave.BoxObstacleUpdate = function () {
+        var n;
+        for (n = 0; n < BoxObstacle.I.length; n++) {
+            if (BoxObstacle.I[n].y > Player.I.y + 200) {
+                BoxObstacle.I[n].y = Game.highestPosi + Game.obstacledistance / 2;
+                BoxObstacle.I[n].speed = this.getRandom(1, BOXOBSTACLE_SPEED);
+                BoxObstacle.I[n].move = true;
+            }
+        }
+    };
     Wave.getRandom = function (min, max) {
         var random = Math.floor(Math.random() * (max + 1 - min)) + min;
         return random;

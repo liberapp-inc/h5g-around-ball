@@ -21,6 +21,7 @@ var OBSTACLE_MAX_DISTANCE = 600;
 var OBSTACLE_MAX_POSITION = 250;
 var OBSTACLE_ADD_POSITION = 5;
 var BOXOBSTACLE_LENGTH = 50;
+var BOXOBSTACLE_SPEED = 2;
 var Game = (function () {
     function Game() {
     }
@@ -50,6 +51,11 @@ var Game = (function () {
         for (n = 0; n < 1; n++) {
             new BoxObstacle();
         }
+        var i;
+        for (i = 0; i < BoxObstacle.I.length; i++) {
+            BoxObstacle.I[i].setStateRun();
+        }
+        Wave.BoxObstacleSet();
         new StartScene();
         new Score();
     };

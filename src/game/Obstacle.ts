@@ -65,10 +65,7 @@ class Obstacle extends GameObject{
                     flag = true;
                     Player.I.currentNum = n ;
                     console.log("c"+ c+ "r+r"+r+_r);
-
             }
-
-
 
             }
 

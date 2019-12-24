@@ -18,6 +18,7 @@ const OBSTACLE_MAX_DISTANCE = 600;
 const OBSTACLE_MAX_POSITION = 250;
 const OBSTACLE_ADD_POSITION = 5;
 const BOXOBSTACLE_LENGTH = 50;
+const BOXOBSTACLE_SPEED = 2;
 
 
 
@@ -48,10 +49,17 @@ class Game {
             
         Wave.ObstacleSet();
 
+
         var n
         for (n = 0; n < 1; n++) {           
             new BoxObstacle();
             }
+
+            var i;
+        for (i = 0; i < BoxObstacle.I.length; i++) {           
+            BoxObstacle.I[i].setStateRun();
+            }
+        Wave.BoxObstacleSet();
         new StartScene();
         new Score();
       
