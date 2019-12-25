@@ -18,7 +18,7 @@ class BoxObstacle extends GameObject{
         this.y = 0;
         this.w = BOXOBSTACLE_LENGTH;
         this.h = BOXOBSTACLE_LENGTH;
-        this.color = OBSTACLE_COLOR;
+        this.color = BOXOBSTACLE_COLOR;
         this.move = false;
         this.speed = 0;
         this.direction = 1;
@@ -27,7 +27,7 @@ class BoxObstacle extends GameObject{
     }
     onDestroy(){
         this.rect.destroy();
-         Obstacle.I= [];
+         BoxObstacle.I= [];
     }
     update(){    
         this.state();

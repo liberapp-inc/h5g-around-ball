@@ -2,12 +2,12 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
 var SAVE_KEY_BESTSCORE = "aroundball-bestScore";
-var BACK_COLOR = 0x3B4F5E;
-var FONT_COLOR = 0xD1E1E2;
+var BACK_COLOR = 0x0C0C0D;
+var FONT_COLOR = 0xD5E7F2;
 var PLAYER_RADIUS_PER_W = 0.04;
 var OBSTACLE_RADIUS_PER_W = 0.08;
-var PLAYER_COLOR = 0x1EB1C8;
-var OBSTACLE_COLOR = 0x768998;
+var PLAYER_COLOR = 0x99F2F2;
+var OBSTACLE_COLOR = 0x4192D9;
 var CAMERA_Y_PER_W = -0.4;
 var CAM_PERS_Y_PER_W = -CAMERA_Y_PER_W * 2;
 var PLAYER_ADD_SPEED = 0.05;
@@ -22,6 +22,7 @@ var OBSTACLE_MAX_POSITION = 250;
 var OBSTACLE_ADD_POSITION = 5;
 var BOXOBSTACLE_LENGTH = 50;
 var BOXOBSTACLE_SPEED = 2;
+var BOXOBSTACLE_COLOR = 0xBF365A;
 var Game = (function () {
     function Game() {
     }

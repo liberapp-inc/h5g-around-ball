@@ -93,7 +93,7 @@ class Player extends GameObject{
          }
          if( Obstacle.detectObstacle( this.x, this.y )){
              Score.I.addPoint();
-             if(Game.obstacledistance > 200){
+             if(Game.obstacledistance > 400){
                  
                  Wave.BoxObstacleUpdate();
 

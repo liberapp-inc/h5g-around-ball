@@ -84,7 +84,7 @@ var Player = (function (_super) {
         }
         if (Obstacle.detectObstacle(this.x, this.y)) {
             Score.I.addPoint();
-            if (Game.obstacledistance > 200) {
+            if (Game.obstacledistance > 400) {
                 Wave.BoxObstacleUpdate();
             }
             if (PLAYER_MAX_SPEED > Game.circlespeed) {

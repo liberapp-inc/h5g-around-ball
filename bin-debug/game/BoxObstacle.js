@@ -19,7 +19,7 @@ var BoxObstacle = (function (_super) {
         _this.y = 0;
         _this.w = BOXOBSTACLE_LENGTH;
         _this.h = BOXOBSTACLE_LENGTH;
-        _this.color = OBSTACLE_COLOR;
+        _this.color = BOXOBSTACLE_COLOR;
         _this.move = false;
         _this.speed = 0;
         _this.direction = 1;
@@ -28,7 +28,7 @@ var BoxObstacle = (function (_super) {
     }
     BoxObstacle.prototype.onDestroy = function () {
         this.rect.destroy();
-        Obstacle.I = [];
+        BoxObstacle.I = [];
     };
     BoxObstacle.prototype.update = function () {
         this.state();
@@ -52,7 +52,7 @@ var BoxObstacle = (function (_super) {
         }
     };
     BoxObstacle.detectObstacle = function (x, y) {
-        var flag = false;
+        var flag = false; //一度ぶつかったら次から問題発生
         var r = BOXOBSTACLE_LENGTH / 2 + Util.w(PLAYER_RADIUS_PER_W);
         var rr = Math.pow(r, 2);
         BoxObstacle.I.forEach(function (p) {
