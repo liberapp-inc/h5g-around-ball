@@ -17,7 +17,6 @@ var StartScene = (function (_super) {
         StartScene.I = _this;
         _this.texts[0] = Util.newTextField("回転ボール飛ばし", Util.width / 12, FONT_COLOR, 0.5, 0.2, true, false);
         _this.texts[1] = Util.newTextField("回転するボールを飛ばして進もう", Util.width / 20, FONT_COLOR, 0.5, 0.3, true, false);
-        //this.texts[2] = Util.newTextField("ぶつからないように避けつづけよう", Util.width / 20, FONT_COLOR, 0.5, 0.35, true, false);
         _this.texts.forEach(function (text) { GameObject.baseDisplay.addChild(text); });
         GameObject.baseDisplay.once(egret.TouchEvent.TOUCH_TAP, _this.tap, _this);
         return _this;
@@ -29,7 +28,7 @@ var StartScene = (function (_super) {
     };
     StartScene.prototype.update = function () { };
     StartScene.prototype.tap = function (e) {
-        Player.I.setStateRun();
+        Player.I.setStateShot();
         var n;
         for (n = 0; n < Obstacle.I.length; n++) {
             Obstacle.I[n].setStateRun();

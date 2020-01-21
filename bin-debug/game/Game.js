@@ -29,6 +29,7 @@ var Game = (function () {
     Game.loadSceneGamePlay = function () {
         Game.obstaclemove = false;
         Game.shotspeed = 0.2;
+        Game.circleaddspeed = 1;
         Game.circlespeed = 1.5;
         Game.circledirection = 1;
         Game.obstaclespeed = 0.3;

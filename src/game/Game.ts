@@ -24,10 +24,10 @@ const BOXOBSTACLE_COLOR = 0xBF365A;
 
 
 class Game {
-
     static loadSceneGamePlay() {
         Game.obstaclemove = false;
         Game.shotspeed = 0.2;
+        Game.circleaddspeed = 1;
         Game.circlespeed = 1.5;
         Game.circledirection = 1;
         Game.obstaclespeed = 0.3;
@@ -67,6 +67,7 @@ class Game {
     }
    
     static circlespeed:number;
+    static circleaddspeed:number;
     static shotspeed: number;
     static highestPosi: number;
     static circledirection:number;
